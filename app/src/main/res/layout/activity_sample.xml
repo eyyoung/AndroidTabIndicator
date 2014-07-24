@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.com.nd.tabindicator.sample.SampleActivity">
+
+    <cn.com.nd.tabindicator.library.TabIndicator xmlns:indicator="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabIndicator"
+        indicator:indicatorHeight="4dp"
+        indicator:defaultTextColor="@color/color_3"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+</RelativeLayout>
