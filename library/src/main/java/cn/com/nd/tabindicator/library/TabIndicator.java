@@ -48,6 +48,7 @@ public class TabIndicator extends LinearLayout {
 
     private final LinearLayout mTabLayout;// 标题布局
     private final int mIndicatorColor;
+    private final int mIndicatorBackColor; // 指针背景颜色
     private final int mDefaultTextColor;
     private TextViewStyle mStyle;// 标题样式
     private String[] mTitles;
@@ -95,6 +96,8 @@ public class TabIndicator extends LinearLayout {
         mStyle.textAppereance = a.getResourceId(
                 R.styleable.TabIndicator_textAppearance, 0);
         // 指针颜色，默认黑色
+        mIndicatorBackColor = a.getColor(
+                R.styleable.TabIndicator_indicatorBackColor, Color.GRAY);
         mIndicatorColor = a.getColor(R.styleable.TabIndicator_indicatorColor,
                 Color.parseColor("#499399"));
         mDefaultTextColor = a.getColor(
@@ -143,6 +146,7 @@ public class TabIndicator extends LinearLayout {
         mTabLayout.setWeightSum(titles.length);
         // 先添加指针，下面响应事件要用
         mIndicatorView = new TabIndicatorView(getContext(), mIndicatorColor);
+        mIndicatorView.setBackgroundColor(mIndicatorBackColor);
         mIndicatorView.setPageNum(titles.length);
         addView(mIndicatorView, new ViewGroup.LayoutParams(MATCH_PARENT,
                 mIndicatorHeight));
@@ -253,6 +257,9 @@ public class TabIndicator extends LinearLayout {
         public void onClick(View v) {
             TitleTextView titleTextView = (TitleTextView) v;
             int index = titleTextView.getIndex();
+            if (mCurPage == index) {
+                return;
+            }
             mIndicatorView.scrollToPage(index);
             mOldPage = mCurPage;
             mCurPage = index;
