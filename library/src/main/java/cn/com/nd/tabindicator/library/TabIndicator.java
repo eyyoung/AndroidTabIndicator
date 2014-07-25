@@ -60,8 +60,8 @@ public class TabIndicator extends LinearLayout {
     private final int mDividerMargin; // 分割线上下margin
     private final int mDividerColor; // 分割线颜色
 
-    private int mCurPage; // 旧页码
-    private int mOldPage; // 新页码
+    private int mCurPage = -1; // 新页码
+    private int mOldPage; // 旧页码
 
     public TabIndicator(Context context) {
         this(context, null);
@@ -257,7 +257,7 @@ public class TabIndicator extends LinearLayout {
         public void onClick(View v) {
             TitleTextView titleTextView = (TitleTextView) v;
             int index = titleTextView.getIndex();
-            if (mCurPage == index) {
+            if (mCurPage == index && mCurPage > 0) {
                 return;
             }
             mIndicatorView.scrollToPage(index);
