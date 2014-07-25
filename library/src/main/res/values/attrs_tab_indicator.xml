@@ -12,5 +12,11 @@
         <attr name="defaultTextColor" format="color" />
         <!--指针高度-->
         <attr name="indicatorHeight" format="dimension" />
+        <!--分割线宽度-->
+        <attr name="dividerWidth" format="dimension" />
+        <!--分割线颜色-->
+        <attr name="dividerColor" format="color" />
+        <!--分割线上下margin-->
+        <attr name="dividerMargin" format="dimension" />
     </declare-styleable>
 </resources>

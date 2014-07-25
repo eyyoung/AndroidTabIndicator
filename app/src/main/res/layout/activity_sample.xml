@@ -6,10 +6,13 @@
 
     <cn.com.nd.tabindicator.library.TabIndicator xmlns:indicator="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tabIndicator"
-        indicator:indicatorHeight="4dp"
-        indicator:defaultTextColor="@color/color_3"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp"
+        indicator:indicatorHeight="4dp"
+        indicator:dividerWidth="1dp"
+        indicator:dividerMargin="5dp"
+        indicator:defaultTextColor="@color/color_3"
+        indicator:dividerColor="@android:color/holo_red_light" />
 
     <FrameLayout
         android:id="@+id/content"

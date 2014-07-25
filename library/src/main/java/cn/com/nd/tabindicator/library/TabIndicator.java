@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,6 +55,9 @@ public class TabIndicator extends LinearLayout {
     private int mTabWidth; // 每个TAB的宽度
     private TabIndicatorView mIndicatorView;
     private TitleTextView[] mTitleViews;
+    private final int mDividerWidth; // 分割线宽度
+    private final int mDividerMargin; // 分割线上下margin
+    private final int mDividerColor; // 分割线颜色
 
     private int mCurPage; // 旧页码
     private int mOldPage; // 新页码
@@ -100,6 +102,13 @@ public class TabIndicator extends LinearLayout {
         // 指针高度
         mIndicatorHeight = a.getDimensionPixelSize(
                 R.styleable.TabIndicator_indicatorHeight, 5);
+        // 分割线宽度，默认无分割线
+        mDividerWidth = a.getDimensionPixelSize(
+                R.styleable.TabIndicator_dividerWidth, 0);
+        mDividerMargin = a.getDimensionPixelSize(
+                R.styleable.TabIndicator_dividerMargin, 10);
+        mDividerColor = a.getColor(R.styleable.TabIndicator_dividerColor,
+                Color.GRAY);
         a.recycle();
 
         mTabLayout = new LinearLayout(context);
@@ -123,7 +132,9 @@ public class TabIndicator extends LinearLayout {
      * @param titles
      *            标题组
      * @param initialPage
+     *            起始页
      * @param onPageChangeListener
+     *            监听
      */
     public void setUp(String[] titles, final int initialPage,
             OnPageChangeListener onPageChangeListener) {
@@ -140,6 +151,13 @@ public class TabIndicator extends LinearLayout {
         mTitleViews = new TitleTextView[mTitles.length];
         for (int i = 0; i < titles.length; i++) {
             addTab(i, titles[i]);
+            // 添加分割线
+            if (mDividerWidth > 0) {
+                // 不是最后一个才添加
+                if (i < titles.length - 1) {
+                    addDivider();
+                }
+            }
         }
         requestLayout();
         post(new Runnable() {
@@ -151,10 +169,23 @@ public class TabIndicator extends LinearLayout {
         });
     }
 
+    /**
+     * 新增分割线
+     */
+    private void addDivider() {
+        View view = new View(getContext());
+        LinearLayout.LayoutParams lp = new LayoutParams(mDividerWidth,
+                MATCH_PARENT);
+        lp.topMargin = lp.bottomMargin = mDividerMargin;
+        view.setBackgroundColor(mDividerColor);
+        mTabLayout.addView(view, lp);
+    }
+
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int childCount = mTabLayout.getChildCount();
-        mTabWidth = MeasureSpec.getSize(widthMeasureSpec) / childCount;// *0.4f
+        int dividerWidth = (mTitles.length - 1) * mDividerWidth;// 分割线总宽度
+        int width = MeasureSpec.getSize(widthMeasureSpec) - dividerWidth;// 控件宽度
+        mTabWidth = width / mTitles.length;// 平分
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -190,7 +221,9 @@ public class TabIndicator extends LinearLayout {
          * 创建标题
          * 
          * @param context
+         *            Context
          * @param style
+         *            Style
          */
         public TitleTextView(Context context, TextViewStyle style) {
             super(context);

@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import cn.com.nd.tabindicator.R;
 import cn.com.nd.tabindicator.library.TabIndicator;
 
@@ -20,7 +19,7 @@ public class SampleActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         mTabIndicator = (TabIndicator) findViewById(R.id.tabIndicator);
-        mTabIndicator.setUp(new String[] { "TEST", "TEST2", "TEST3" }, this);
+        mTabIndicator.setUp(new String[] { "TITLE", "TITLE2", "TITLE3" }, this);
     }
 
     @Override
